@@ -50,4 +50,22 @@ public class PublicationServicesimpl implements PublicationServices {
             .orElseThrow(()-> new ResourceNotFountException("publication", "id", id));
             return mapdto(publication);
     }
+
+    @Override
+    public PublicationDTO updatePublication(PublicationDTO publicationdto, Long id) {
+        Publication publication = publicationrepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFountException("publication", "id", id));
+        publication.setTittle(publicationdto.getTittle());
+        publication.setContent(publicationdto.getContent());
+        publication.setDescription(publication.getDescription());
+        Publication updatepublication = publicationrepository.save(publication);
+        return mapdto(updatepublication);
+    }
+
+    @Override
+    public void deletePublication(long id) {
+        Publication publication = publicationrepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFountException("Publication", "Id", id));
+        publicationrepository.delete(publication);
+    }
 }
