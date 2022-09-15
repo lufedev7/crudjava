@@ -1,6 +1,9 @@
 package com.crudspring.api.Services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -23,9 +26,12 @@ public class PublicationServicesimpl implements PublicationServices {
         return publicationresponse;
     }
     @Override
-    public List<PublicationDTO> getpublication(){
-        List<Publication> publications = publicationrepository.findAll();
-        return publications.stream().map(publication -> mapdto(publication)).collect(Collectors.toList());
+    public List<PublicationDTO> getpublication(int numberPage, int measure) {
+        Pageable pageable = PageRequest.of(numberPage, measure);
+        Page<Publication> publications = publicationrepository.findAll(pageable);
+
+        List<Publication> listPublications = publications.getContent();
+        return listPublications.stream().map(publication -> mapdto(publication)).collect(Collectors.toList());
     }
     private PublicationDTO mapdto(Publication publication) {
         PublicationDTO publicationdto = new PublicationDTO();

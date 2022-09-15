@@ -6,7 +6,8 @@ import com.crudspring.api.DTOs.PublicationDTO;
 
 public interface PublicationServices {
     public PublicationDTO createpublication(PublicationDTO publicationdto);
-    public List<PublicationDTO> getpublication();
+
+    public List<PublicationDTO> getpublication(int numberPage, int measure);
     public PublicationDTO getpublicationId(Long id);
 
     public PublicationDTO updatePublication(PublicationDTO publicationdto, Long id);

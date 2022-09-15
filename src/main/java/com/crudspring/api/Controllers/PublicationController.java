@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crudspring.api.DTOs.PublicationDTO;
@@ -20,21 +21,26 @@ import com.crudspring.api.Services.PublicationServices;
 @RestController
 @RequestMapping("/publication")
 public class PublicationController {
-    
+
+    @GetMapping
+    public List<PublicationDTO> listPublication(
+            @RequestParam(value = "nomPage", defaultValue = "0", required = false) int numberPage,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int measure) {
+        return publicationservices.getpublication(numberPage, measure);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PublicationDTO> getPublicationForId(@PathVariable(name = "id") Long id) {
+
+        return ResponseEntity.ok(publicationservices.getpublicationId(id));
+    }
+
     @Autowired
     private PublicationServices publicationservices;
+
     @PostMapping
-    public ResponseEntity<PublicationDTO> savePublication(@RequestBody PublicationDTO publicationdto){
-        return new ResponseEntity<>(publicationservices.createpublication(publicationdto),HttpStatus.CREATED);
-    }
-    @GetMapping
-    public List <PublicationDTO> listPublication(){
-        return publicationservices.getpublication();
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity <PublicationDTO> getPublicationForId(@PathVariable(name="id")Long id){
-        
-        return ResponseEntity.ok(publicationservices.getpublicationId(id));
+    public ResponseEntity<PublicationDTO> savePublication(@RequestBody PublicationDTO publicationdto) {
+        return new ResponseEntity<>(publicationservices.createpublication(publicationdto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
