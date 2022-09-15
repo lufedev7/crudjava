@@ -1,6 +1,6 @@
 package com.crudspring.api.Controllers;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crudspring.api.DTOs.PublicationDTO;
+import com.crudspring.api.DTOs.PublicationResponse;
 import com.crudspring.api.Services.PublicationServices;
 
 @RestController
@@ -23,10 +24,12 @@ import com.crudspring.api.Services.PublicationServices;
 public class PublicationController {
 
     @GetMapping
-    public List<PublicationDTO> listPublication(
+    public PublicationResponse listPublication(
             @RequestParam(value = "nomPage", defaultValue = "0", required = false) int numberPage,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int measure) {
-        return publicationservices.getpublication(numberPage, measure);
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int measure,
+            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String orderBy,
+            @RequestParam(value = "sortdir", defaultValue = "asc", required = false) String sortDir) {
+        return publicationservices.getpublication(numberPage, measure, orderBy, sortDir);
     }
 
     @GetMapping("/{id}")

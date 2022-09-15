@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 import java.util.stream.Collectors;
 
 import com.crudspring.api.DTOs.PublicationDTO;
+import com.crudspring.api.DTOs.PublicationResponse;
 import com.crudspring.api.Exceptions.ResourceNotFountException;
 import com.crudspring.api.Models.Publication;
 import com.crudspring.api.Repository.PublicationRepository;
@@ -26,12 +28,24 @@ public class PublicationServicesimpl implements PublicationServices {
         return publicationresponse;
     }
     @Override
-    public List<PublicationDTO> getpublication(int numberPage, int measure) {
-        Pageable pageable = PageRequest.of(numberPage, measure);
+    public PublicationResponse getpublication(int numberPage, int measure, String orderBy, String sortdir) {
+        Sort sort = sortdir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(orderBy).ascending()
+                : Sort.by(orderBy).descending();
+        Pageable pageable = PageRequest.of(numberPage, measure, sort);
         Page<Publication> publications = publicationrepository.findAll(pageable);
 
         List<Publication> listPublications = publications.getContent();
-        return listPublications.stream().map(publication -> mapdto(publication)).collect(Collectors.toList());
+
+        List<PublicationDTO> content = listPublications.stream().map(publication -> mapdto(publication))
+                .collect(Collectors.toList());
+        PublicationResponse publicationresponse = new PublicationResponse();
+        publicationresponse.setContenido(content);
+        publicationresponse.setNumPage(publications.getNumber());
+        publicationresponse.setSizePage(publications.getSize());
+        publicationresponse.setTotalElemnt(publications.getTotalElements());
+        publicationresponse.setTotalpage(publications.getTotalPages());
+        publicationresponse.setLatest(publications.isLast());
+        return publicationresponse;
     }
     private PublicationDTO mapdto(Publication publication) {
         PublicationDTO publicationdto = new PublicationDTO();

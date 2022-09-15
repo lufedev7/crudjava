@@ -1,13 +1,14 @@
 package com.crudspring.api.Services;
 
-import java.util.List;
+
 
 import com.crudspring.api.DTOs.PublicationDTO;
+import com.crudspring.api.DTOs.PublicationResponse;
 
 public interface PublicationServices {
     public PublicationDTO createpublication(PublicationDTO publicationdto);
 
-    public List<PublicationDTO> getpublication(int numberPage, int measure);
+    public PublicationResponse getpublication(int numberPage, int measure, String orderBy, String sortDir);
     public PublicationDTO getpublicationId(Long id);
 
     public PublicationDTO updatePublication(PublicationDTO publicationdto, Long id);
