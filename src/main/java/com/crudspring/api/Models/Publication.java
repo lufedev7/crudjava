@@ -1,10 +1,15 @@
 package com.crudspring.api.Models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -21,6 +26,17 @@ public class Publication {
     private String description;
     @Column(name = "content",nullable = false)
     private String content;
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comments> comments = new HashSet<>();
+
+    // Esta anotacion se utiliza para la relacion uno a muchos, y el removal, para
+    // cuando
+    // se elimine un elemento de publication este eliminte los registros
+    // relacionados a este
+    // y el set es una clase de java, esta la utilizamos aqui porque
+    // vamos a retornar muchos comentarios de una sola publicacion, es por esto que
+    // creamos este tipo de arreglo.
+    /////////////////////////////////////////////////////////////////
     public Long getId() {
         return id;
     }

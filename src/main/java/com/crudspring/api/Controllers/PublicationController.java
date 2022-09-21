@@ -18,17 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.crudspring.api.DTOs.PublicationDTO;
 import com.crudspring.api.DTOs.PublicationResponse;
 import com.crudspring.api.Services.PublicationServices;
+import com.crudspring.api.Utililies.AppConst;
 
 @RestController
 @RequestMapping("/publication")
 public class PublicationController {
+    @Autowired
+    private PublicationServices publicationservices;
 
     @GetMapping
     public PublicationResponse listPublication(
-            @RequestParam(value = "nomPage", defaultValue = "0", required = false) int numberPage,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int measure,
-            @RequestParam(value = "sortBy", defaultValue = "id", required = false) String orderBy,
-            @RequestParam(value = "sortdir", defaultValue = "asc", required = false) String sortDir) {
+            @RequestParam(value = "nomPage", defaultValue = AppConst.Mesure_page_for_default, required = false) int numberPage,
+            @RequestParam(value = "pageSize", defaultValue = AppConst.Number_page_for_default, required = false) int measure,
+            @RequestParam(value = "sortBy", defaultValue = AppConst.Order_by_for_default, required = false) String orderBy,
+            @RequestParam(value = "sortdir", defaultValue = AppConst.Order_by_for_dir, required = false) String sortDir) {
         return publicationservices.getpublication(numberPage, measure, orderBy, sortDir);
     }
 
@@ -38,8 +41,7 @@ public class PublicationController {
         return ResponseEntity.ok(publicationservices.getpublicationId(id));
     }
 
-    @Autowired
-    private PublicationServices publicationservices;
+
 
     @PostMapping
     public ResponseEntity<PublicationDTO> savePublication(@RequestBody PublicationDTO publicationdto) {
