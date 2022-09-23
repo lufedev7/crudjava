@@ -7,6 +7,7 @@ import com.crudspring.api.Models.Publication;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import com.crudspring.api.Exceptions.ResourceNotFountException;
 @// A service class that implements the interface CommentsServices.
 Service
 public class CommentsServicesimpl implements CommentsServices {
+    @Autowired
+    private ModelMapper modelmapper;
     @Autowired
     private CommentRepository commentrepository;
     @Autowired
@@ -87,21 +90,15 @@ public class CommentsServicesimpl implements CommentsServices {
     }
 
     private CommentsDTO mapDTO(Comments comments) {
-        CommentsDTO commentsdto = new CommentsDTO();
-        commentsdto.setId(comments.getId());
-        commentsdto.setEmail(comments.getEmail());
-        commentsdto.setName(comments.getName());
-        commentsdto.setBody(comments.getBody());
+        CommentsDTO commentsdto = modelmapper.map(comments, CommentsDTO.class);
+
         return commentsdto;
 
     }
 
     private Comments mapEntity(CommentsDTO commentsdto) {
-        Comments comments = new Comments();
-        comments.setId(commentsdto.getId());
-        comments.setName(commentsdto.getName());
-        comments.setEmail(commentsdto.getEmail());
-        comments.setBody(commentsdto.getBody());
+        Comments comments = modelmapper.map(commentsdto, Comments.class);
+
         return comments;
 
     }

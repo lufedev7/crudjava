@@ -2,6 +2,8 @@ package com.crudspring.api.Controllers;
 
 
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,12 +46,12 @@ public class PublicationController {
 
 
     @PostMapping
-    public ResponseEntity<PublicationDTO> savePublication(@RequestBody PublicationDTO publicationdto) {
+    public ResponseEntity<PublicationDTO> savePublication(@Valid @RequestBody PublicationDTO publicationdto) {
         return new ResponseEntity<>(publicationservices.createpublication(publicationdto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PublicationDTO> updatePublicationForId(@RequestBody PublicationDTO publicationdto,
+    public ResponseEntity<PublicationDTO> updatePublicationForId(@Valid @RequestBody PublicationDTO publicationdto,
             @PathVariable(name = "id") Long id) {
         PublicationDTO publicationresponse = publicationservices.updatePublication(publicationdto, id);
 

@@ -1,9 +1,20 @@
 package com.crudspring.api.DTOs;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class CommentsDTO {
     private long id;
+    @NotEmpty
+    @Size(min = 2, message = "El nombre del comentario deberia tener al menos 2 caracteres")
     private String name;
+    @Email
+    @NotEmpty(message = "El email no debe de estar vacio")
+    @Size(min = 2, message = "El email de la publicacion deberia tener al menos 2 caracteres")
     private String email;
+    @NotEmpty
+    @Size(min = 10, message = "El titulo de la publicacion deberia tener al menos 10 caracteres")
     private String body;
 
     public long getId() {

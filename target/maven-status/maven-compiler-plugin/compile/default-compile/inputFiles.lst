@@ -3,6 +3,7 @@ c:\Project-java\api\src\main\java\com\crudspring\api\Services\PublicationService
 c:\Project-java\api\src\main\java\com\crudspring\api\Models\Publication.java
 c:\Project-java\api\src\main\java\com\crudspring\api\DTOs\PublicationResponse.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Services\PublicationServices.java
+c:\Project-java\api\src\main\java\com\crudspring\api\DTOs\ErrorDatails.java
 c:\Project-java\api\src\main\java\com\crudspring\api\DTOs\CommentsDTO.java
 c:\Project-java\api\src\main\java\com\crudspring\api\DTOs\PublicationDTO.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Controllers\CommentsController.java
@@ -11,6 +12,7 @@ c:\Project-java\api\src\main\java\com\crudspring\api\Models\Comments.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Services\CommentsServices.java
 c:\Project-java\api\src\main\java\com\crudspring\api\ApiApplication.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Exceptions\BlogAppExceptions.java
+c:\Project-java\api\src\main\java\com\crudspring\api\Exceptions\GlobalExceptionhandler.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Repository\CommentRepository.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Services\CommentsServicesimpl.java
 c:\Project-java\api\src\main\java\com\crudspring\api\Controllers\PublicationController.java

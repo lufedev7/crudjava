@@ -1,5 +1,6 @@
 package com.crudspring.api.Services;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,8 @@ import com.crudspring.api.Repository.PublicationRepository;
 public class PublicationServicesimpl implements PublicationServices {
     @Autowired
     private PublicationRepository publicationrepository;
+    @Autowired
+    private ModelMapper modelmapper;
     @Override
     public PublicationDTO createpublication(PublicationDTO publicationdto){
         Publication publication = mapEntity(publicationdto);
@@ -48,19 +51,13 @@ public class PublicationServicesimpl implements PublicationServices {
         return publicationresponse;
     }
     private PublicationDTO mapdto(Publication publication) {
-        PublicationDTO publicationdto = new PublicationDTO();
-        publicationdto.setId(publication.getId());
-        publicationdto.setContent(publication.getContent());
-        publicationdto.setDescription(publication.getDescription());
-        publicationdto.setTittle(publication.getTittle());
+        PublicationDTO publicationdto = modelmapper.map(publication, PublicationDTO.class);
+
         return publicationdto;
 
     }
     private Publication mapEntity(PublicationDTO publicationdto){
-          Publication publication = new Publication();
-          publication.setTittle(publicationdto.getTittle());
-          publication.setContent(publicationdto.getContent());
-          publication.setDescription(publicationdto.getDescription());
+        Publication publication = modelmapper.map(publicationdto, Publication.class);
 
         return publication;
     }

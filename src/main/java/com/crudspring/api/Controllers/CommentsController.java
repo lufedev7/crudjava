@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import com.crudspring.api.DTOs.CommentsDTO;
 import com.crudspring.api.Services.CommentsServices;
 
@@ -43,7 +46,7 @@ public class CommentsController {
 
     @PostMapping("/publication/{id}/comments")
     public ResponseEntity<CommentsDTO> saveComments(@PathVariable(value = "id") long id,
-            @RequestBody CommentsDTO commentsdto) {
+            @Valid @RequestBody CommentsDTO commentsdto) {
         return new ResponseEntity<>(commentservices.createComment(id, commentsdto), HttpStatus.CREATED);
     }
 
